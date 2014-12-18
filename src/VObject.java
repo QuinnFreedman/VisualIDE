@@ -30,12 +30,10 @@ public class VObject extends JPanel{
 	VObject(){
 		this.setOpaque(false);
 		this.setLayout(new BorderLayout());
-		//this.color = Main.colors.get(this.getClass().getSimpleName());
 		header = new JPanel();
 		header.setOpaque(false);
 		((FlowLayout) header.getLayout()).setHgap(7);
 		((FlowLayout) header.getLayout()).setVgap(2);
-		//header.setBackground(color);
 		headerLabel = new JLabel();
 		headerLabel.setOpaque(false);
 		header.add(headerLabel);

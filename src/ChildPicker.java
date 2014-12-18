@@ -79,10 +79,13 @@ public class ChildPicker extends VObject{
 		}
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			PrimativeFunction pf;
+			PrimativeFunction pf = null;
 			try {
-				Constructor<?> constructor = f.getClass().getConstructor(Point.class, Node.class, Primative.class);
-				pf = (PrimativeFunction) constructor.newInstance(Node.getLocationOnPanel(this.childPicker), ((Primative) this.childPicker.parent).dataType, parentNode, (Primative) this.childPicker.parent);
+				Constructor<?> constructor = f.getClass().getDeclaredConstructor(Point.class, Node.class, Primative.class);
+				pf = (PrimativeFunction) constructor.newInstance(Node.getLocationOnPanel(this.childPicker), 
+						parentNode, 
+						(Primative) this.childPicker.parent
+					);
 			} catch (InstantiationException e) {
 				// Auto-generated catch block
 				e.printStackTrace();
@@ -101,8 +104,8 @@ public class ChildPicker extends VObject{
 			} catch (SecurityException e) {
 				// Auto-generated catch block
 				e.printStackTrace();
-			}finally{
-				pf = new PrimativeFunction(Node.getLocationOnPanel(this.childPicker), ((Primative) this.childPicker.parent).dataType, parentNode, (Primative) this.childPicker.parent,"error");
+			}catch(Exception e){
+				//pf = null;//= new PrimativeFunction(Node.getLocationOnPanel(this.childPicker), ((Primative) this.childPicker.parent).dataType, parentNode, (Primative) this.childPicker.parent,"error");
 			}
 			Main.objects.add(pf);
 			Main.panel.repaint();

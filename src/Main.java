@@ -133,6 +133,8 @@ public class Main implements ActionListener{
 		
 		componentMover = new ComponentMover();
 		componentMover.setEdgeInsets(new Insets(10, 10, 10, 10));
+		
+		panel.add(new EntryPoint());
 	}
 	
 	@Override

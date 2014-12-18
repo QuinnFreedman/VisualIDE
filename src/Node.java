@@ -20,6 +20,8 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 	Direction facing;
 	NodeType type;
 	NodeStyle style = null;
+	public ArrayList<Primative.DataType> dataType = new ArrayList<Primative.DataType>();
+	protected Dimension size = new Dimension(30,20);
 	Node(NodeType type,VObject parentObj,NodeStyle style){
 		this.style = style;
 		this.setBounds(0, 0, getPreferredSize().width, getPreferredSize().height);
@@ -28,6 +30,11 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		this.facing = Direction.EAST;
 		this.type = type;
 		this.parentObject = parentObj;
+		//if(parentObj.instance == Primative){//TODO use 'extends'/'typeof'?
+		//	this.dataType = ((Primative) parentObj).dataType;
+		//}else{
+			//this.dataType = null;
+		//}
 	}
 	Node(NodeType type,VObject parentObj){
 		this(type,parentObj,NodeStyle.VISIBLE);
@@ -40,12 +47,17 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		this(type,parentObj,NodeStyle.VISIBLE);
 		this.facing = dir;
 	}
+	Node(Direction dir, NodeType type, VObject parentObj, ArrayList<Primative.DataType> dt){
+		this(type,parentObj,NodeStyle.VISIBLE);
+		this.facing = dir;
+		this.dataType = dt;
+	}
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		switch(style){
 		case VISIBLE:
-			g.fillArc(0, 0, 30, 20, 0, 360);
+			g.fillArc(0, 0, this.size.width, this.size.height, 0, 360);
 		case INVISIBLE:
 			
 		}
@@ -58,7 +70,7 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 	public Dimension getPreferredSize(){
 		switch(style){
 		case VISIBLE:
-			return new Dimension(30,20);
+			return size;
 		case INVISIBLE:
 			return new Dimension(0,0);
 		}
@@ -94,10 +106,16 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 				if(this.type == NodeType.SENDING && node.type == NodeType.RECIEVING){
 					node.parents.add(this);
 					this.children.add(node);
+				//	Main.curves.add(new Curve(this,node));
+					new Args(node,this);
 				}else if(this.type == NodeType.RECIEVING && node.type == NodeType.SENDING){
-					this.parents.add(this);
+					this.parents.add(node);
 					node.children.add(this);
+				//	Main.curves.add(new Curve(node,this));
+					new Args(node,this);
+					//TODO this shit
 				}
+				System.out.println(this.dataType+", "+node.dataType);
 				break;
 			}
 		}
@@ -138,7 +156,7 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		NORTH,SOUTH,EAST,WEST
 	}
 	public enum NodeType{
-		SENDING,RECIEVING
+		SENDING,RECIEVING,INHERITANCE_SENDING,INHERITANCE_RECIEVING
 	}
 	public enum NodeStyle{
 		INVISIBLE,VISIBLE

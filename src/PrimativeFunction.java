@@ -1,14 +1,19 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class PrimativeFunction extends Function{
 	public String name;
@@ -16,17 +21,44 @@ public class PrimativeFunction extends Function{
 	Primative.DataType type;
 	private JLabel label;
 	private String text = "";
-	PrimativeFunction(Point pos, Primative.DataType type, Node parentNode, Primative parent, String name){
+	private JPanel nodeHolder;
+	PrimativeFunction(Point pos, Primative.DataType type, Node parentNode, Primative parent, String name, ArrayList<Primative.DataType> inputs, Primative.DataType output){
 		super();
 		this.type = type;
 		this.color = Main.colors.get(type);
-		this.setBounds(new Rectangle(pos,new Dimension(90,40)));
-		this.nodeFromParent = new Node(Node.Direction.WEST, Node.NodeType.SENDING, this, Node.NodeStyle.INVISIBLE);
+		this.inputs = inputs;
+		this.output = output;
+		this.setBounds(new Rectangle(pos,new Dimension(120,40)));
+		this.nodeFromParent = new Node(Node.Direction.WEST, Node.NodeType.INHERITANCE_RECIEVING, this, Node.NodeStyle.INVISIBLE);
 		this.body.add(nodeFromParent);
 		this.body.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.text = name;
 		label = new JLabel(name);
 		this.body.add(label);
+		nodeHolder = new JPanel();
+		nodeHolder.setLayout(new BoxLayout(nodeHolder, BoxLayout.Y_AXIS));
+		nodeHolder.setOpaque(false);
+		if(this.inputs != null && this.inputs.size() != 0){
+			this.inputNode = new Node(Node.Direction.EAST,Node.NodeType.RECIEVING,this);
+			Main.nodes.add(inputNode);
+			this.nodeHolder.add(inputNode);
+		}else{
+			JPanel jp = new JPanel();
+			jp.setPreferredSize(new Dimension(30,20));
+			jp.setOpaque(false);
+			this.nodeHolder.add(jp);
+		}
+		if(this.output != null){
+			this.outputNode = new Node(Node.Direction.EAST,Node.NodeType.SENDING,this);
+			Main.nodes.add(outputNode);
+			this.nodeHolder.add(outputNode);
+		}else{
+			JPanel jp = new JPanel();
+			jp.setPreferredSize(new Dimension(30,20));
+			jp.setOpaque(false);
+			this.nodeHolder.add(jp);
+		}
+		this.add(nodeHolder,BorderLayout.LINE_END);
 		Main.nodes.add(nodeFromParent);
 		Main.curves.add(new Curve(parentNode,nodeFromParent));
 		Main.panel.add(this);

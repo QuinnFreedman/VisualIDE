@@ -32,6 +32,7 @@ public class VInt extends Primative{
 		//this.functions = new ArrayList<Class<? extends PrimativeFunction>>();
 		//this.functions.add(set.class);
 		//this.functions.add(subtractFrom.class);
+		this.functions.add(new get());
 		this.functions.add(new set());
 		this.functions.add(new subtractFrom());
 		this.functions.add(new multiplyBy());
@@ -42,9 +43,22 @@ public class VInt extends Primative{
 		valueField.getDocument().removeDocumentListener(this);
 	}
 	
+	static class get extends PrimativeFunction{
+		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
+		get(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Get", null, Primative.DataType.INTEGER);
+			this.setSize(90,40);
+		}
+		get(){
+			super();
+			this.name = "Get";
+		}
+		
+	}
 	static class set extends PrimativeFunction{
+		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
 		set(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Set");
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Set", new ArrayList<Primative.DataType>(){{this.add(Primative.DataType.INTEGER);}},null);
 		}
 		set(){
 			super();
@@ -54,7 +68,7 @@ public class VInt extends Primative{
 	}
 	static class subtractFrom extends PrimativeFunction{
 		subtractFrom(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Subtract From");
+			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Subtract From", new ArrayList<Primative.DataType>(){{this.add(Primative.DataType.INTEGER);}},null);
 		}
 		subtractFrom(){
 			super();
@@ -64,7 +78,7 @@ public class VInt extends Primative{
 	}
 	static class multiplyBy extends PrimativeFunction{
 		multiplyBy(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Multiply By");
+			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Multiply By", new ArrayList<Primative.DataType>(){{this.add(Primative.DataType.INTEGER);}},null);
 		}
 		multiplyBy(){
 			super();

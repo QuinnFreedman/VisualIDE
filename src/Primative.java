@@ -30,7 +30,7 @@ public class Primative extends VObject implements DocumentListener, ContainsChil
 		valueField.getDocument().addDocumentListener(this);
 		valueField.setBorder(bodyPadding);
 		this.body.add(valueField,BorderLayout.CENTER);
-		childNode = new Node(Node.NodeType.SENDING,this);
+		childNode = new Node(Node.NodeType.INHERITANCE_SENDING,this);
 		childNode.setBorder(bodyPadding);
 		Main.nodes.add(childNode);
 		this.body.add(childNode,BorderLayout.LINE_END);
