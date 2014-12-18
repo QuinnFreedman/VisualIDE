@@ -30,6 +30,7 @@ public class EntryPoint extends VObject{
 			super(Node.Direction.SOUTH, Node.NodeType.SENDING, parentObj);
 			this.size = new Dimension(80,30);
 			this.setOpaque(false);
+			this.canHaveMultipleInputs = false;
 		}
 		
 		@Override

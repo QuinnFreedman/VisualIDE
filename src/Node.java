@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 	Direction facing;
 	NodeType type;
 	NodeStyle style = null;
+	boolean canHaveMultipleInputs = true;
 	public ArrayList<Primative.DataType> dataType = new ArrayList<Primative.DataType>();
 	protected Dimension size = new Dimension(30,20);
 	Node(NodeType type,VObject parentObj,NodeStyle style){
@@ -52,6 +54,36 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		this.facing = dir;
 		this.dataType = dt;
 	}
+	
+	private void clearChildren(Node nodeToClear){
+		if(nodeToClear.canHaveMultipleInputs == false){
+			Iterator<Curve> itr = Main.curves.iterator();
+			VObject toRemove = null;
+			while(itr.hasNext()){
+				Curve c = itr.next();
+				Node node;
+				if(c.nodes[0] == nodeToClear){
+					node = c.nodes[1];
+				}else if(c.nodes[1] == nodeToClear){
+					node = c.nodes[0];
+				}else{
+					continue;
+				}
+				if(node.parentObject instanceof Args){
+					if(toRemove != null){
+						System.out.println("ERROR:clearChildren");
+					}
+					toRemove = node.parentObject;
+				}else{
+					itr.remove();
+				}
+			}
+			if(toRemove != null){
+				toRemove.delete();
+			}
+		}
+	}
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -103,15 +135,21 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 			rect = new Rectangle(getLocationOnPanel(node),new Dimension(node.getWidth(),node.getHeight()));
 			if(rect.contains(mouse)){
 				isHoverAnotherNode = true;
+				if(this.parentObject == node.parentObject){
+					continue;
+				}
+				
 				if(this.type == NodeType.SENDING && node.type == NodeType.RECIEVING){
 					node.parents.add(this);
 					this.children.add(node);
-				//	Main.curves.add(new Curve(this,node));
+					clearChildren(this);
+					clearChildren(node);
 					new Args(node,this);
 				}else if(this.type == NodeType.RECIEVING && node.type == NodeType.SENDING){
 					this.parents.add(node);
 					node.children.add(this);
-				//	Main.curves.add(new Curve(node,this));
+					clearChildren(this);
+					clearChildren(node);
 					new Args(node,this);
 					//TODO this shit
 				}
