@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.swing.text.AbstractDocument;
@@ -36,6 +37,7 @@ public class VInt extends Primative{
 		this.functions.add(new set());
 		this.functions.add(new subtractFrom());
 		this.functions.add(new multiplyBy());
+		this.functions.add(new incrament());//TODO use classes instead of instances
 	}
 	@Override
 	protected void setValue(String s){
@@ -47,7 +49,6 @@ public class VInt extends Primative{
 		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
 		get(Point pos, Node parentNode, Primative parent) {
 			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Get", null, Primative.DataType.INTEGER);
-			this.setSize(90,40);
 		}
 		get(){
 			super();
@@ -58,7 +59,7 @@ public class VInt extends Primative{
 	static class set extends PrimativeFunction{
 		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
 		set(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Set", new ArrayList<Primative.DataType>(){{this.add(Primative.DataType.INTEGER);}},null);
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Set", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
 		}
 		set(){
 			super();
@@ -68,7 +69,8 @@ public class VInt extends Primative{
 	}
 	static class subtractFrom extends PrimativeFunction{
 		subtractFrom(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Subtract From", new ArrayList<Primative.DataType>(){{this.add(Primative.DataType.INTEGER);}},null);
+			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Subtract From", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
+			this.setSize(120,40);
 		}
 		subtractFrom(){
 			super();
@@ -78,11 +80,22 @@ public class VInt extends Primative{
 	}
 	static class multiplyBy extends PrimativeFunction{
 		multiplyBy(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Multiply By", new ArrayList<Primative.DataType>(){{this.add(Primative.DataType.INTEGER);}},null);
+			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Multiply By", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
+			this.setSize(120,40);
 		}
 		multiplyBy(){
 			super();
 			this.name = "Multiply By";
+		}
+		
+	}
+	static class incrament extends PrimativeFunction{
+		incrament(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Incrament", new ArrayList<Primative.DataType>(),null);
+		}
+		incrament(){
+			super();
+			this.name = "Incrament";
 		}
 		
 	}

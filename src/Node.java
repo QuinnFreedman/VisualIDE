@@ -8,7 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -55,7 +57,7 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		this.dataType = dt;
 	}
 	
-	private void clearChildren(Node nodeToClear){
+	private static void clearChildren(Node nodeToClear){
 		if(nodeToClear.canHaveMultipleInputs == false){
 			Iterator<Curve> itr = Main.curves.iterator();
 			VObject toRemove = null;
@@ -82,6 +84,16 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 				toRemove.delete();
 			}
 		}
+	}
+	
+	public static ArrayList<ArrayList<Primative.DataType>> complement(ArrayList<Primative.DataType> A, ArrayList<Primative.DataType> B){
+		List<Primative.DataType> sourceList = new ArrayList<Primative.DataType>(A);
+		List<Primative.DataType> destinationList = new ArrayList<Primative.DataType>(B);
+
+		sourceList.removeAll(A);
+		destinationList.removeAll(B);
+		
+		return new ArrayList<ArrayList<Primative.DataType>>(Arrays.asList(A,B));
 	}
 	
 	@Override
@@ -139,21 +151,26 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 					continue;
 				}
 				
-				if(this.type == NodeType.SENDING && node.type == NodeType.RECIEVING){
-					node.parents.add(this);
-					this.children.add(node);
+				if((this.type == NodeType.SENDING && node.type == NodeType.RECIEVING) ||
+					(this.type == NodeType.RECIEVING && node.type == NodeType.SENDING))
+				{
+					if(this.type == NodeType.RECIEVING){
+						this.parents.add(node);
+						node.children.add(this);
+					}else{
+						node.parents.add(this);
+						this.children.add(node);
+					}
 					clearChildren(this);
 					clearChildren(node);
-					new Args(node,this);
-				}else if(this.type == NodeType.RECIEVING && node.type == NodeType.SENDING){
-					this.parents.add(node);
-					node.children.add(this);
-					clearChildren(this);
-					clearChildren(node);
-					new Args(node,this);
-					//TODO this shit
+					ArrayList<ArrayList<Primative.DataType>> compl = complement(this.dataType,node.dataType);
+					System.out.println(compl);
+					if(compl.get(0).size() == 0 && compl.get(1).size() == 0){
+						Main.curves.add(new Curve(this,node));
+					}else{
+						new Args(this,node);
+					}
 				}
-				System.out.println(this.dataType+", "+node.dataType);
 				break;
 			}
 		}

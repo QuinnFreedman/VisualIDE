@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -28,7 +29,7 @@ public class PrimativeFunction extends Function{
 		this.color = Main.colors.get(type);
 		this.inputs = inputs;
 		this.output = output;
-		this.setBounds(new Rectangle(pos,new Dimension(120,40)));
+		this.setBounds(new Rectangle(pos,new Dimension(90,40)));
 		this.nodeFromParent = new Node(Node.Direction.WEST, Node.NodeType.INHERITANCE_RECIEVING, this, Node.NodeStyle.INVISIBLE);
 		this.body.add(nodeFromParent);
 		this.body.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -38,8 +39,8 @@ public class PrimativeFunction extends Function{
 		nodeHolder = new JPanel();
 		nodeHolder.setLayout(new BoxLayout(nodeHolder, BoxLayout.Y_AXIS));
 		nodeHolder.setOpaque(false);
-		if(this.inputs != null && this.inputs.size() != 0){
-			this.inputNode = new Node(Node.Direction.EAST,Node.NodeType.RECIEVING,this);
+		if(this.inputs != null){
+			this.inputNode = new Node(Node.Direction.EAST,Node.NodeType.RECIEVING,this,inputs);
 			Main.nodes.add(inputNode);
 			this.nodeHolder.add(inputNode);
 		}else{
@@ -49,7 +50,7 @@ public class PrimativeFunction extends Function{
 			this.nodeHolder.add(jp);
 		}
 		if(this.output != null){
-			this.outputNode = new Node(Node.Direction.EAST,Node.NodeType.SENDING,this);
+			this.outputNode = new Node(Node.Direction.EAST,Node.NodeType.SENDING,this,new ArrayList<Primative.DataType>(Arrays.asList(output)));
 			Main.nodes.add(outputNode);
 			this.nodeHolder.add(outputNode);
 		}else{
