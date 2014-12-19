@@ -150,22 +150,36 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 				if(this.parentObject == node.parentObject){
 					continue;
 				}
-				
+				System.out.println("this : "+this);
+				System.out.println("node : "+node);
 				if((this.type == NodeType.SENDING && node.type == NodeType.RECIEVING) ||
 					(this.type == NodeType.RECIEVING && node.type == NodeType.SENDING))
 				{
 					if(this.type == NodeType.RECIEVING){
-						this.parents.add(node);
-						node.children.add(this);
+						System.out.println(this.parents);
+						if(this.parents.contains(node) || node.children.contains(this)){
+							continue;
+						}else{
+							this.parents.add(node);
+							node.children.add(this);
+						}
 					}else{
-						node.parents.add(this);
-						this.children.add(node);
+						if(node.parents.contains(this) || this.children.contains(node)){
+							continue;
+						}else{
+							node.parents.add(this);
+							this.children.add(node);
+						}
 					}
 					clearChildren(this);
 					clearChildren(node);
+					//System.out.println(this.dataType+", "+node.dataType);
 					ArrayList<ArrayList<Primative.DataType>> compl = complement(this.dataType,node.dataType);
 					System.out.println(compl);
 					if(compl.get(0).size() == 0 && compl.get(1).size() == 0){
+						node.parentObject.repaint();node.parentObject.revalidate();
+						System.out.println("this.getLocationOnPanel() : "+Node.getLocationOnPanel(this));
+						System.out.println("node.getLocationOnPanel() : "+Node.getLocationOnPanel(node));
 						Main.curves.add(new Curve(this,node));
 					}else{
 						new Args(this,node);
@@ -182,8 +196,8 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 				Main.objects.add(cp);
 				Main.panel.repaint();
 				Main.panel.revalidate();
-				//TODO create cild
-				//TODO make createChild method for each primative type, instead of doing it here
+				//TODO create child
+				//TODO make createChild method for each primitive type, instead of doing it here
 			}
 		}
 		Main.panel.repaint();

@@ -28,7 +28,9 @@ public class Args extends VObject{
 			inputDataType.addAll(sendNode.dataType);
 		ArrayList<Primative.DataType> outputDataType = recieveNode.dataType;
 		actionNode = new Node(Node.Direction.EAST, Node.NodeType.RECIEVING, this, inputDataType);
+		actionNode.canHaveMultipleInputs = false;
 		outputNode = new Node(Node.Direction.WEST, Node.NodeType.SENDING, this, outputDataType);
+		outputNode.canHaveMultipleInputs =false;
 		Main.nodes.add(actionNode);
 		Main.nodes.add(outputNode);
 		this.add(actionNode,BorderLayout.AFTER_LINE_ENDS);

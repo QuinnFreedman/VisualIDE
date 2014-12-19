@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 public class PrimativeFunction extends Function{
 	public String name;
 	protected Node nodeFromParent;
@@ -23,12 +24,12 @@ public class PrimativeFunction extends Function{
 	private JLabel label;
 	private String text = "";
 	private JPanel nodeHolder;
-	PrimativeFunction(Point pos, Primative.DataType type, Node parentNode, Primative parent, String name, ArrayList<Primative.DataType> inputs, Primative.DataType output){
+	PrimativeFunction(Point pos, Primative.DataType type, Node parentNode, Primative parent, String name, ArrayList<Primative.DataType> inputs, ArrayList<Primative.DataType> outputs){
 		super();
 		this.type = type;
 		this.color = Main.colors.get(type);
 		this.inputs = inputs;
-		this.output = output;
+		this.outputs = outputs;
 		this.setBounds(new Rectangle(pos,new Dimension(90,40)));
 		this.nodeFromParent = new Node(Node.Direction.WEST, Node.NodeType.INHERITANCE_RECIEVING, this, Node.NodeStyle.INVISIBLE);
 		this.body.add(nodeFromParent);
@@ -49,8 +50,8 @@ public class PrimativeFunction extends Function{
 			jp.setOpaque(false);
 			this.nodeHolder.add(jp);
 		}
-		if(this.output != null){
-			this.outputNode = new Node(Node.Direction.EAST,Node.NodeType.SENDING,this,new ArrayList<Primative.DataType>(Arrays.asList(output)));
+		if(this.outputs != null){
+			this.outputNode = new Node(Node.Direction.EAST,Node.NodeType.SENDING,this,outputs);
 			Main.nodes.add(outputNode);
 			this.nodeHolder.add(outputNode);
 		}else{

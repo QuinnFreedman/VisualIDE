@@ -48,7 +48,7 @@ public class VInt extends Primative{
 	static class get extends PrimativeFunction{
 		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
 		get(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Get", null, Primative.DataType.INTEGER);
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Get", null, new ArrayList<Primative.DataType>());
 		}
 		get(){
 			super();

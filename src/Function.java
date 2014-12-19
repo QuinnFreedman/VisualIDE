@@ -6,7 +6,7 @@ public class Function extends VObject{
 	public Node inputNode;
 	public Node outputNode;
 	public ArrayList<Primative.DataType> inputs;
-	public Primative.DataType output;
+	public ArrayList<Primative.DataType> outputs;
 	public void run(){
 		
 	}
