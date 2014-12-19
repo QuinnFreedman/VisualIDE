@@ -77,6 +77,13 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 					}
 					toRemove = node.parentObject;
 				}else{
+					if(node.type == Node.NodeType.RECIEVING){
+						node.parents.remove(nodeToClear);
+						nodeToClear.children.remove(node);
+					}else{
+						nodeToClear.parents.remove(node);
+						node.children.remove(nodeToClear);
+					}
 					itr.remove();
 				}
 			}
@@ -96,6 +103,23 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		return new ArrayList<ArrayList<Primative.DataType>>(Arrays.asList(A,B));
 	}
 	
+	public static void connect(Node A, Node B){
+		if(A.type == NodeType.RECIEVING && B.type == NodeType.SENDING){
+			
+			A.parents.add(B);
+			B.children.add(A);
+		
+		}else if(B.type == NodeType.RECIEVING && A.type == NodeType.SENDING){
+		
+			B.parents.add(A);
+			A.children.add(B);
+		
+		}else{
+			System.out.println("connect Failed");
+			return;
+		}
+		Main.curves.add(new Curve(A,B));
+	}
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -156,19 +180,12 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 					(this.type == NodeType.RECIEVING && node.type == NodeType.SENDING))
 				{
 					if(this.type == NodeType.RECIEVING){
-						System.out.println(this.parents);
 						if(this.parents.contains(node) || node.children.contains(this)){
 							continue;
-						}else{
-							this.parents.add(node);
-							node.children.add(this);
 						}
 					}else{
 						if(node.parents.contains(this) || this.children.contains(node)){
 							continue;
-						}else{
-							node.parents.add(this);
-							this.children.add(node);
 						}
 					}
 					clearChildren(this);
@@ -180,7 +197,7 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 						node.parentObject.repaint();node.parentObject.revalidate();
 						System.out.println("this.getLocationOnPanel() : "+Node.getLocationOnPanel(this));
 						System.out.println("node.getLocationOnPanel() : "+Node.getLocationOnPanel(node));
-						Main.curves.add(new Curve(this,node));
+						connect(this,node);
 					}else{
 						new Args(this,node);
 					}

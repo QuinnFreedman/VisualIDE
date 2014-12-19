@@ -39,8 +39,10 @@ public class Args extends VObject{
 		Main.panel.add(this);
 		this.repaint();
 		this.revalidate();
-		Main.curves.add(new Curve(outputNode,recieveNode));
-		Main.curves.add(new Curve(actionNode,sendNode));
+		Node.connect(outputNode, recieveNode);
+		Node.connect(actionNode,sendNode);
+	//	Main.curves.add(new Curve(outputNode,recieveNode));
+	//	Main.curves.add(new Curve(actionNode,sendNode));
 	}
 	@Override
 	public void paintComponent(Graphics g){
