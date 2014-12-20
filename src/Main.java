@@ -14,14 +14,17 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JComponent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
-public class Main implements ActionListener{
+public class Main implements ActionListener, MouseInputListener{
 	static ArrayList<VObject> objects = new ArrayList<VObject>();
 	static ArrayList<Curve> curves = new ArrayList<Curve>();
 	static ArrayList<Node> nodes = new ArrayList<Node>();
@@ -33,6 +36,8 @@ public class Main implements ActionListener{
 	 */
 	static ComponentMover componentMover;
 	static JPanel panel;
+	private static JPopupMenu panelPopup;
+	private static Point clickLocation;
 
 	public static void main(String[] args){
 		new Main();
@@ -134,23 +139,104 @@ public class Main implements ActionListener{
 		componentMover = new ComponentMover();
 		componentMover.setEdgeInsets(new Insets(10, 10, 10, 10));
 		
+		panelPopup = new JPopupMenu();
+		panel.addMouseListener(this);
+		
+		JMenuItem popupBoolean = new JMenuItem("Boolean");
+		popupBoolean.addActionListener(this);
+		panelPopup.add(popupBoolean);
+		
+		JMenuItem popupInt = new JMenuItem("Integer");
+		popupInt.addActionListener(this);
+		panelPopup.add(popupInt);
+		
+		JMenuItem popupDouble = new JMenuItem("Double");
+		popupDouble.addActionListener(this);
+		panelPopup.add(popupDouble);
+		
+		panelPopup.addSeparator();
+		
+		JMenuItem popupFunction = new JMenuItem("Function");
+		popupFunction.addActionListener(this);
+		panelPopup.add(popupFunction);
+		
+		JMenuItem popupTimeline = new JMenuItem("Timeline");
+		popupTimeline.addActionListener(this);
+		panelPopup.add(popupTimeline);
+		
+		JMenuItem popupBlueprint = new JMenuItem("Blueprint");
+		popupBlueprint.addActionListener(this);
+		panelPopup.add(popupBlueprint);
+		
+		
 		panel.add(new EntryPoint());
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String c = e.getActionCommand();
+		Point p;
+		if(((JComponent) e.getSource()).getParent() == panelPopup){
+			p = clickLocation;
+		}else{
+			p = VObject.getFreePosition();
+		}
 		if(c == "Boolean"){
-			objects.add(new VBoolean());
+			objects.add(new VBoolean(p));
 		}else if(c == "Integer"){
-			objects.add(new VInt());
+			objects.add(new VInt(p));
 		}else if(c == "Double"){
-			objects.add(new VDouble());
+			objects.add(new VDouble(p));
 		}else{
 			System.out.println("null Action:"+c);
 		}
     }
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON3){
+			clickLocation = new Point(e.getX(), e.getY());
+			panelPopup.show(panel, e.getX(), e.getY());
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+	
 	static class DisplayPanel extends JPanel{
 		DisplayPanel(){
 			this.setLayout(null);

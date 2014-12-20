@@ -94,13 +94,18 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 	}
 	
 	public static ArrayList<ArrayList<Primative.DataType>> complement(ArrayList<Primative.DataType> A, ArrayList<Primative.DataType> B){
-		List<Primative.DataType> sourceList = new ArrayList<Primative.DataType>(A);
-		List<Primative.DataType> destinationList = new ArrayList<Primative.DataType>(B);
-
-		sourceList.removeAll(A);
-		destinationList.removeAll(B);
+		ArrayList<Primative.DataType> sourceList = new ArrayList<Primative.DataType>(A);
+		ArrayList<Primative.DataType> destinationList = new ArrayList<Primative.DataType>(B);
 		
-		return new ArrayList<ArrayList<Primative.DataType>>(Arrays.asList(A,B));
+		System.out.println("A : "+A);
+		System.out.println("B : "+B);
+		System.out.println("sourceList : "+sourceList);
+		System.out.println("destinationList : "+destinationList);
+		
+		sourceList.removeAll(B);
+		destinationList.removeAll(A);
+		
+		return new ArrayList<ArrayList<Primative.DataType>>(Arrays.asList(sourceList,destinationList));
 	}
 	
 	public static void connect(Node A, Node B){

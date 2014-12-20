@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Point;
 
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -20,12 +21,17 @@ public class VDouble extends Primative{
 		new IntDocumentFilter((AbstractDocument) valueField.getDocument());
 		this.width = 12;
 		this.height = 5;
-		getFreePosition();
+		this.position = getFreePosition();
 		this.borderWidth = 10;
 		this.setBounds(this.position.x*Main.gridWidth, this.position.y*Main.gridWidth, this.width*Main.gridWidth, this.height*Main.gridWidth);
 		Main.panel.add(this);
 		Main.panel.repaint();
 		Main.panel.revalidate();
+	}
+	public VDouble(Point p) {
+		this();
+		//this.position = p;
+		this.setBounds(p.x, p.y, this.width*Main.gridWidth, this.height*Main.gridWidth);
 	}
 	@Override
 	protected void setValue(String s){

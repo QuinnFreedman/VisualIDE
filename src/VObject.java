@@ -24,8 +24,8 @@ public class VObject extends JPanel{
 	JPanel header;
 	JPanel body;
 	JLabel headerLabel;
-	protected void getFreePosition(){
-		this.position = new Point(1,1);
+	protected static Point getFreePosition(){
+		return new Point(1,1);
 	}
 	VObject(){
 		this.setOpaque(false);

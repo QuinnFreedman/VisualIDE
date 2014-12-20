@@ -24,7 +24,7 @@ public class VInt extends Primative{
 		new IntDocumentFilter((AbstractDocument) valueField.getDocument());
 		this.width = 12;
 		this.height = 5;
-		getFreePosition();
+		this.position = getFreePosition();
 		this.borderWidth = 10;
 		this.setBounds(this.position.x*Main.gridWidth, this.position.y*Main.gridWidth, this.width*Main.gridWidth, this.height*Main.gridWidth);
 		Main.panel.add(this);
@@ -39,6 +39,13 @@ public class VInt extends Primative{
 		this.functions.add(new multiplyBy());
 		this.functions.add(new incrament());//TODO use classes instead of instances
 	}
+	
+	VInt(Point p){
+		this();
+		//this.position = p;
+		this.setBounds(p.x, p.y, this.width*Main.gridWidth, this.height*Main.gridWidth);
+	}
+	
 	@Override
 	protected void setValue(String s){
 		value = Integer.parseInt(s);
@@ -48,7 +55,7 @@ public class VInt extends Primative{
 	static class get extends PrimativeFunction{
 		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
 		get(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Get", null, new ArrayList<Primative.DataType>());
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Get", null, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)));
 		}
 		get(){
 			super();
