@@ -72,10 +72,28 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 					continue;
 				}
 				if(node.parentObject instanceof Args){
-					if(toRemove != null){
-						System.out.println("ERROR:clearChildren");
+					boolean argsHasInputs = false;
+					for(Node inpNode : ((Args) node.parentObject).getInputNodes()){
+						if(inpNode.parents != null && inpNode.parents.size() != 0){
+							argsHasInputs = true;
+							break;
+						}
 					}
-					toRemove = node.parentObject;
+					if(!argsHasInputs){
+						if(toRemove != null){
+							System.out.println("ERROR:clearChildren");
+						}
+						toRemove = node.parentObject;
+					}else{
+						if(node.type == Node.NodeType.RECIEVING){
+							node.parents.remove(nodeToClear);
+							nodeToClear.children.remove(node);
+						}else{
+							nodeToClear.parents.remove(node);
+							node.children.remove(nodeToClear);
+						}
+						itr.remove();
+					}
 				}else{
 					if(node.type == Node.NodeType.RECIEVING){
 						node.parents.remove(nodeToClear);
@@ -130,7 +148,12 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		super.paintComponent(g);
 		switch(style){
 		case VISIBLE:
+			g.setColor(Color.BLACK);
 			g.fillArc(0, 0, this.size.width, this.size.height, 0, 360);
+			if(this.dataType.size() == 1){
+				g.setColor(Main.colors.get(this.dataType.get(0)));
+				g.fillArc(this.size.width/2 - 5, this.size.height/2 - 5, 10, 10, 0, 360);
+			}
 		case INVISIBLE:
 			
 		}
@@ -203,7 +226,7 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 						System.out.println("this.getLocationOnPanel() : "+Node.getLocationOnPanel(this));
 						System.out.println("node.getLocationOnPanel() : "+Node.getLocationOnPanel(node));
 						connect(this,node);
-					}else{
+					}else if(this.parentObject.getClass() != Args.class && node.parentObject.getClass() != Args.class){
 						new Args(this,node);
 					}
 				}

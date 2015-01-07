@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -27,6 +29,9 @@ class VBoolean extends Primative{
 		Main.panel.add(this);
 		Main.panel.repaint();
 		Main.panel.revalidate();
+		this.functions.add(new get());
+		this.functions.add(new set());
+		this.functions.add(new toggle());
 	}
 	public VBoolean(Point p) {
 		this();
@@ -38,6 +43,40 @@ class VBoolean extends Primative{
 		value = (s.equals("true") || s.equals("True") || s.equals("TRUE"));
 		valueField.getDocument().removeDocumentListener(this);
 	}
+	
+	static class get extends PrimativeFunction{
+		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
+		get(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.BOOLEAN, parentNode, parent, "Get", null, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.BOOLEAN)));
+		}
+		get(){
+			super();
+			this.name = "Get";
+		}
+		
+	}
+	static class set extends PrimativeFunction{
+		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
+		set(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.BOOLEAN, parentNode, parent, "Set", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.BOOLEAN)),null);
+		}
+		set(){
+			super();
+			this.name = "Set";
+		}
+		
+	}
+	static class toggle extends PrimativeFunction{
+		toggle(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.BOOLEAN, parentNode, parent,"Toggle", new ArrayList<Primative.DataType>(),null);
+		}
+		toggle(){
+			super();
+			this.name = "Toggle";//TODO fix toggle input
+		}
+		
+	}
+	
 	static class BooleanDocumentFilter extends DocumentFilter {
 		
 		AbstractDocument doc;

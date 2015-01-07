@@ -4,9 +4,12 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Args extends VObject{
-	private ArrayList inputNodes;
+	private ArrayList<Node> inputNodes = new ArrayList<Node>();
 	private Node actionNode;
 	private Node outputNode;
+	public ArrayList<Node> getInputNodes(){
+		return inputNodes;
+	}
 	Args(Node A, Node B){
 		Node recieveNode;
 		Node sendNode;
@@ -35,6 +38,16 @@ public class Args extends VObject{
 		Main.nodes.add(outputNode);
 		this.add(actionNode,BorderLayout.AFTER_LINE_ENDS);
 		this.add(outputNode,BorderLayout.BEFORE_LINE_BEGINS);
+		
+		for(Primative.DataType inp : Node.complement(inputDataType, outputDataType).get(1)){
+			ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
+			input.add(inp);
+			Node n = new Node(Node.Direction.NORTH,Node.NodeType.RECIEVING,this,input);
+			this.inputNodes.add(n);
+			Main.nodes.add(n);
+			this.add(n,BorderLayout.PAGE_START);
+		}
+		
 		Main.objects.add(this);
 		Main.panel.add(this);
 		this.repaint();

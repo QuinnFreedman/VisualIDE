@@ -4,13 +4,17 @@ import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,6 +48,12 @@ public class Main implements ActionListener, MouseInputListener{
 		colors.put(Primative.DataType.BOOLEAN, Color.green);
 		colors.put(Primative.DataType.INTEGER, Color.red);
 		colors.put(Primative.DataType.DOUBLE, new Color(255,0,255));
+		ArrayList<Primative.DataType> A = new ArrayList<Primative.DataType>();
+		A.add(Primative.DataType.INTEGER);
+		A.add(Primative.DataType.BOOLEAN);
+		ArrayList<Primative.DataType> B = new ArrayList<Primative.DataType>();
+		B.add(Primative.DataType.INTEGER);
+		System.out.println(Node.complement(A, B));
 	}
 	
 	Main(){
@@ -247,12 +257,29 @@ public class Main implements ActionListener, MouseInputListener{
 		public void paintComponent(Graphics g){
 			super.paintComponent(g);
 			g.setColor(new Color(0x4A4A4A));
-			for(int x = 0; x < this.getPreferredSize().width/gridWidth; x++){
-				g.drawLine(x*gridWidth, 0, x*gridWidth, this.getPreferredSize().height);
+			for(int x = 0; x < this.getSize().width/gridWidth; x++){
+				g.drawLine(x*gridWidth, 0, x*gridWidth, this.getSize().height);
 			}
-			for(int y = 0; y < this.getPreferredSize().height/gridWidth; y++){
-				g.drawLine(0, y*gridWidth, this.getPreferredSize().width,y*gridWidth);
+			for(int y = 0; y < this.getSize().height/gridWidth; y++){
+				g.drawLine(0, y*gridWidth, this.getSize().width,y*gridWidth);
 			}
+			GradientPaint gradient = new GradientPaint(0, 0, new Color(20,20,20,200), 0, 30, new Color(0,0,0,0));
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setPaint(gradient);
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			
+			gradient = new GradientPaint(0, this.getSize().height-30, new Color(0,0,0,0), 0, this.getSize().height, new Color(20,20,20,200));
+			g2.setPaint(gradient);
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			
+			gradient = new GradientPaint(0, 0, new Color(20,20,20,200), 30, 0, new Color(0,0,0,0));
+			g2.setPaint(gradient);
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			
+			gradient = new GradientPaint(0, this.getSize().width-30, new Color(0,0,0,0), 0, this.getSize().width, new Color(20,20,20,200));
+			g2.setPaint(gradient);
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			
 			if(mousePos != null && Node.currentlyDragging != null)
 				(new Curve(Node.currentlyDragging,mousePos)).draw(g);
 			for(Curve curve : curves){
