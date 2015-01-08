@@ -263,22 +263,22 @@ public class Main implements ActionListener, MouseInputListener{
 			for(int y = 0; y < this.getSize().height/gridWidth; y++){
 				g.drawLine(0, y*gridWidth, this.getSize().width,y*gridWidth);
 			}
-			GradientPaint gradient = new GradientPaint(0, 0, new Color(20,20,20,200), 0, 30, new Color(0,0,0,0));
+			GradientPaint gradient = new GradientPaint(0, 0, new Color(20,20,20,200), 0, 20, new Color(0,0,0,0));
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setPaint(gradient);
-			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height));
 			
-			gradient = new GradientPaint(0, this.getSize().height-30, new Color(0,0,0,0), 0, this.getSize().height, new Color(20,20,20,200));
+			gradient = new GradientPaint(0, this.getSize().height-20, new Color(0,0,0,0), 0, this.getSize().height, new Color(20,20,20,200));
 			g2.setPaint(gradient);
-			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height));
 			
-			gradient = new GradientPaint(0, 0, new Color(20,20,20,200), 30, 0, new Color(0,0,0,0));
+			gradient = new GradientPaint(0, 0, new Color(20,20,20,200), 20, 0, new Color(0,0,0,0));
 			g2.setPaint(gradient);
-			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height));
 			
-			gradient = new GradientPaint(0, this.getSize().width-30, new Color(0,0,0,0), 0, this.getSize().width, new Color(20,20,20,200));
+			gradient = new GradientPaint(this.getSize().width-20, 0, new Color(0,0,0,0), this.getSize().width, 0, new Color(20,20,20,200));
 			g2.setPaint(gradient);
-			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height+20));
+			g2.fill(new Rectangle.Double(0, 0, this.getSize().width, this.getSize().height));
 			
 			if(mousePos != null && Node.currentlyDragging != null)
 				(new Curve(Node.currentlyDragging,mousePos)).draw(g);
