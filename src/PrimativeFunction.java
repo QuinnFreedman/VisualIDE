@@ -16,15 +16,16 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 public class PrimativeFunction extends Function{
-	public String name;
 	protected Node nodeFromParent;
 	Primative.DataType type;
 	private JLabel label;
 	private String text = "";
 	private JPanel nodeHolder;
-	PrimativeFunction(Point pos, Primative.DataType type, Node parentNode, Primative parent, String name, ArrayList<Primative.DataType> inputs, ArrayList<Primative.DataType> outputs){
+	public String getFunctionName(){
+		return this.getClass().getSimpleName();
+	}
+	PrimativeFunction(Point pos, Primative.DataType type, Node parentNode, Primative parent, /*String name,*/ ArrayList<Primative.DataType> inputs, ArrayList<Primative.DataType> outputs){
 		super();
 		this.type = type;
 		this.color = Main.colors.get(type);
@@ -34,8 +35,8 @@ public class PrimativeFunction extends Function{
 		this.nodeFromParent = new Node(Node.Direction.WEST, Node.NodeType.INHERITANCE_RECIEVING, this, Node.NodeStyle.INVISIBLE);
 		this.body.add(nodeFromParent);
 		this.body.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.text = name;
-		label = new JLabel(name);
+		this.text = getFunctionName();
+		label = new JLabel(text);
 		this.body.add(label);
 		nodeHolder = new JPanel();
 		nodeHolder.setLayout(new BoxLayout(nodeHolder, BoxLayout.Y_AXIS));

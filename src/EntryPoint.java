@@ -10,7 +10,7 @@ public class EntryPoint extends VObject{
 	EntryPoint(){
 		this.setOpaque(false);
 		this.color = Color.black;
-		this.setBounds(100, 50, 80, 80);
+		this.setBounds(350, 50, 80, 80);
 		((FlowLayout) this.body.getLayout()).setVgap(27);
 		JLabel text = new JLabel("Start");
 		this.body.add(text);

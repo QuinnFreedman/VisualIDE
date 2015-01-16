@@ -29,9 +29,9 @@ class VBoolean extends Primative{
 		Main.panel.add(this);
 		Main.panel.repaint();
 		Main.panel.revalidate();
-		this.functions.add(new get());
-		this.functions.add(new set());
-		this.functions.add(new toggle());
+		this.functions.add(new Get());
+		this.functions.add(new Set());
+		this.functions.add(new Toggle());
 	}
 	public VBoolean(Point p) {
 		this();
@@ -44,35 +44,32 @@ class VBoolean extends Primative{
 		valueField.getDocument().removeDocumentListener(this);
 	}
 	
-	static class get extends PrimativeFunction{
+	static class Get extends PrimativeFunction{
 		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
-		get(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.BOOLEAN, parentNode, parent, "Get", null, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.BOOLEAN)));
+		Get(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.BOOLEAN, parentNode, parent, null, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.BOOLEAN)));
 		}
-		get(){
+		Get(){
 			super();
-			this.name = "Get";
 		}
 		
 	}
-	static class set extends PrimativeFunction{
+	static class Set extends PrimativeFunction{
 		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
-		set(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.BOOLEAN, parentNode, parent, "Set", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.BOOLEAN)),null);
+		Set(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.BOOLEAN, parentNode, parent, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.BOOLEAN)),null);
 		}
-		set(){
+		Set(){
 			super();
-			this.name = "Set";
 		}
 		
 	}
-	static class toggle extends PrimativeFunction{
-		toggle(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.BOOLEAN, parentNode, parent,"Toggle", new ArrayList<Primative.DataType>(),null);
+	static class Toggle extends PrimativeFunction{
+		Toggle(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.BOOLEAN, parentNode, parent, new ArrayList<Primative.DataType>(),null);
 		}
-		toggle(){
-			super();
-			this.name = "Toggle";//TODO fix toggle input
+		Toggle(){
+			super();//TODO fix toggle input
 		}
 		
 	}

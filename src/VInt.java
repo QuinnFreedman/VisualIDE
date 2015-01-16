@@ -33,11 +33,11 @@ public class VInt extends Primative{
 		//this.functions = new ArrayList<Class<? extends PrimativeFunction>>();
 		//this.functions.add(set.class);
 		//this.functions.add(subtractFrom.class);
-		this.functions.add(new get());
-		this.functions.add(new set());
-		this.functions.add(new subtractFrom());
-		this.functions.add(new multiplyBy());
-		this.functions.add(new incrament());//TODO use classes instead of instances
+		this.functions.add(new Get());
+		this.functions.add(new Set());
+		this.functions.add(new Subtract_From());
+		this.functions.add(new Multiply_By());
+		this.functions.add(new Incrament());//TODO use classes instead of instances
 	}
 	
 	VInt(Point p){
@@ -52,57 +52,50 @@ public class VInt extends Primative{
 		valueField.getDocument().removeDocumentListener(this);
 	}
 	
-	static class get extends PrimativeFunction{
-		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
-		get(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Get", null, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)));
+	static class Get extends PrimativeFunction{
+		Get(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, null, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)));
 		}
-		get(){
+		Get(){
 			super();
-			this.name = "Get";
 		}
 		
 	}
-	static class set extends PrimativeFunction{
-		public ArrayList<Primative.DataType> input = new ArrayList<Primative.DataType>();
-		set(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent, "Set", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
+	static class Set extends PrimativeFunction{
+		Set(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
 		}
-		set(){
+		Set(){
 			super();
-			this.name = "Set";
 		}
 		
 	}
-	static class subtractFrom extends PrimativeFunction{
-		subtractFrom(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Subtract From", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
+	static class Subtract_From extends PrimativeFunction{
+		Subtract_From(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
 			this.setSize(120,40);
 		}
-		subtractFrom(){
+		Subtract_From(){
 			super();
-			this.name = "Subtract From";
 		}
 		
 	}
-	static class multiplyBy extends PrimativeFunction{
-		multiplyBy(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Multiply By", new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
+	static class Multiply_By extends PrimativeFunction{
+		Multiply_By(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)),null);
 			this.setSize(120,40);
 		}
-		multiplyBy(){
+		Multiply_By(){
 			super();
-			this.name = "Multiply By";
 		}
 		
 	}
-	static class incrament extends PrimativeFunction{
-		incrament(Point pos, Node parentNode, Primative parent) {
-			super(pos, Primative.DataType.INTEGER, parentNode, parent,"Incrament", new ArrayList<Primative.DataType>(),null);
+	static class Incrament extends PrimativeFunction{
+		Incrament(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.INTEGER, parentNode, parent, new ArrayList<Primative.DataType>(),null);
 		}
-		incrament(){
+		Incrament(){
 			super();
-			this.name = "Incrament";
 		}
 		
 	}

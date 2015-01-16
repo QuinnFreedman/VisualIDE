@@ -57,7 +57,7 @@ public class ChildPicker extends VObject{
 		MenuItem(PrimativeFunction f, ChildPicker parent){
 			super();
 			this.f = f;
-			this.name = f.name;
+			this.name = f.getClass().getSimpleName();
 			this.childPicker = parent;
 			this.setBackground(Color.RED);
 			//this.setBorder(BorderFactory.createLineBorder(Color.BLACK));

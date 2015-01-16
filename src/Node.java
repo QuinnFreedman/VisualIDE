@@ -142,6 +142,11 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 			return;
 		}
 		Main.curves.add(new Curve(A,B));
+		A.whenConnected();
+		B.whenConnected();
+	}
+	public void whenConnected(){
+		
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -219,17 +224,38 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 					clearChildren(this);
 					clearChildren(node);
 					//System.out.println(this.dataType+", "+node.dataType);
-					ArrayList<ArrayList<Primative.DataType>> compl = complement(this.dataType,node.dataType);
-					System.out.println(compl);
-					if(compl.get(0).size() == 0 && compl.get(1).size() == 0){
-						node.parentObject.repaint();node.parentObject.revalidate();
-						System.out.println("this.getLocationOnPanel() : "+Node.getLocationOnPanel(this));
-						System.out.println("node.getLocationOnPanel() : "+Node.getLocationOnPanel(node));
+					if(this.dataType.size() == 1 && this.dataType.get(0) == Primative.DataType.GENERIC && 
+							((node.dataType.size() > 0 && node.dataType.get(0) != Primative.DataType.GENERIC) ||
+									(node.dataType.size() == 0)
+									)
+						)	//if this is generic and node isn't
+					{
+						System.out.println("this is generic");
+						this.dataType = node.dataType;
 						connect(this,node);
-					}else if(this.parentObject.getClass() != Args.class && node.parentObject.getClass() != Args.class){
-						new Args(this,node);
 					}
-				}
+					else if(node.dataType.size() == 1 && node.dataType.get(0) == Primative.DataType.GENERIC && 
+						((this.dataType.size() > 0 && this.dataType.get(0) != Primative.DataType.GENERIC) ||
+								(this.dataType.size() == 0)
+								)
+							)//if node is generic and this isn't
+					{
+						System.out.println("node is generic");
+						node.dataType = this.dataType;
+						connect(this,node);
+					}else{
+						ArrayList<ArrayList<Primative.DataType>> compl = complement(this.dataType,node.dataType);
+						System.out.println(compl);
+						if(compl.get(0).size() == 0 && compl.get(1).size() == 0){
+							node.parentObject.repaint();node.parentObject.revalidate();
+							System.out.println("this.getLocationOnPanel() : "+Node.getLocationOnPanel(this));
+							System.out.println("node.getLocationOnPanel() : "+Node.getLocationOnPanel(node));
+							connect(this,node);
+						}else if(this.parentObject.getClass() != Args.class && node.parentObject.getClass() != Args.class){
+							new Args(this,node);
+						}
+					}
+				}//TODO rules for generic
 				break;
 			}
 		}
