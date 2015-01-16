@@ -119,6 +119,10 @@ public class Main implements ActionListener, MouseInputListener{
 		
 		mnAdd.addSeparator();
 		
+		JMenuItem mntmMath = new JMenuItem("Math");
+		mntmMath.addActionListener(this);
+		mnAdd.add(mntmMath);
+		
 		JMenuItem mntmFunction = new JMenuItem("Function");
 		mntmFunction.addActionListener(this);
 		mnAdd.add(mntmFunction);
@@ -166,6 +170,10 @@ public class Main implements ActionListener, MouseInputListener{
 		
 		panelPopup.addSeparator();
 		
+		JMenuItem popupMath = new JMenuItem("Math");
+		popupMath.addActionListener(this);
+		panelPopup.add(popupMath);
+		
 		JMenuItem popupFunction = new JMenuItem("Function");
 		popupFunction.addActionListener(this);
 		panelPopup.add(popupFunction);
@@ -197,6 +205,8 @@ public class Main implements ActionListener, MouseInputListener{
 			objects.add(new VInt(p));
 		}else if(c == "Double"){
 			objects.add(new VDouble(p));
+		}else if(c == "Math"){
+			objects.add(new VMath(p));
 		}else{
 			System.out.println("null Action:"+c);
 		}

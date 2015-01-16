@@ -67,7 +67,7 @@ public class Primative extends VObject implements DocumentListener, ContainsChil
 		}
     }
     public enum DataType{
-    	BOOLEAN,BYTE,SHORT,INTEGER,FLOAT,DOUBLE,LONG,CHARACTER,STRING 
+    	BOOLEAN,BYTE,SHORT,INTEGER,FLOAT,DOUBLE,LONG,CHARACTER,STRING,GENERIC
     }
 	@Override
 	public ArrayList<PrimativeFunction> getFunctions() {
