@@ -56,9 +56,15 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 		this.facing = dir;
 		this.dataType = dt;
 	}
-	
+	public void onConnect(){
+		//override in subclass
+	}
+	public void onDisconnect(){
+		//override in subclass
+	}
 	private static void clearChildren(Node nodeToClear){
 		if(nodeToClear.canHaveMultipleInputs == false){
+			nodeToClear.onDisconnect(); //TODO be more specific? ie call later in the method only if connection is actually removed
 			Iterator<Curve> itr = Main.curves.iterator();
 			VObject toRemove = null;
 			while(itr.hasNext()){
@@ -142,12 +148,10 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 			return;
 		}
 		Main.curves.add(new Curve(A,B));
-		A.whenConnected();
-		B.whenConnected();
+		A.onConnect();
+		B.onConnect();
 	}
-	public void whenConnected(){
-		
-	}
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);

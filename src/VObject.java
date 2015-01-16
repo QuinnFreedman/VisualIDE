@@ -51,8 +51,12 @@ public class VObject extends JPanel{
 		Curve c = null;
 		while(itr.hasNext()){
 			c = itr.next();
-			if((c.isNode[0] && c.nodes[0].parentObject == this) || (c.isNode[1] && c.nodes[1].parentObject == this)){
+			if(c.isNode[0] && c.nodes[0].parentObject == this){
 				itr.remove();
+				c.nodes[0].onDisconnect();
+			}else if(c.isNode[1] && c.nodes[1].parentObject == this){
+				itr.remove();
+				c.nodes[1].onDisconnect();
 			}
 		}
 		Iterator<Node> itrN = Main.nodes.iterator();
