@@ -229,8 +229,8 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 					clearChildren(node);
 					//System.out.println(this.dataType+", "+node.dataType);
 					if(this.dataType.size() == 1 && this.dataType.get(0) == Primative.DataType.GENERIC && 
-							((node.dataType.size() > 0 && node.dataType.get(0) != Primative.DataType.GENERIC) ||
-									(node.dataType.size() == 0)
+							((node.dataType.size() > 0 && node.dataType.get(0) != Primative.DataType.GENERIC) /*||
+									(node.dataType.size() == 0)*/
 									)
 						)	//if this is generic and node isn't
 					{
@@ -239,14 +239,18 @@ public class Node extends JPanel implements MouseListener, MouseMotionListener{
 						connect(this,node);
 					}
 					else if(node.dataType.size() == 1 && node.dataType.get(0) == Primative.DataType.GENERIC && 
-						((this.dataType.size() > 0 && this.dataType.get(0) != Primative.DataType.GENERIC) ||
-								(this.dataType.size() == 0)
+						((this.dataType.size() > 0 && this.dataType.get(0) != Primative.DataType.GENERIC)/* ||
+								(this.dataType.size() == 0)*/
 								)
 							)//if node is generic and this isn't
 					{
 						System.out.println("node is generic");
 						node.dataType = this.dataType;
 						connect(this,node);
+					}else if((node.dataType.size() == 1 && node.dataType.get(0) == Primative.DataType.GENERIC && this.dataType.size() == 0) ||
+							(this.dataType.size() == 1 && this.dataType.get(0) == Primative.DataType.GENERIC && node.dataType.size() == 0)
+							){
+						//Don't connect null data nodes with generic nodes
 					}else{
 						ArrayList<ArrayList<Primative.DataType>> compl = complement(this.dataType,node.dataType);
 						System.out.println(compl);

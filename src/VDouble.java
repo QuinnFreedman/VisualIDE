@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -27,6 +29,10 @@ public class VDouble extends Primative{
 		Main.panel.add(this);
 		Main.panel.repaint();
 		Main.panel.revalidate();
+		this.functions.add(new Get());
+		this.functions.add(new Set());
+		this.functions.add(new Subtract_From());
+		this.functions.add(new Multiply_By());
 	}
 	public VDouble(Point p) {
 		this();
@@ -38,6 +44,44 @@ public class VDouble extends Primative{
 		value = Double.parseDouble(s);
 		valueField.getDocument().removeDocumentListener(this);
 		//this.valueField.setText(Boolean.toString(value));
+	}
+	static class Get extends PrimativeFunction{
+		Get(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.DOUBLE, parentNode, parent, null, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.DOUBLE)));
+		}
+		Get(){
+			super();
+		}
+		
+	}
+	static class Set extends PrimativeFunction{
+		Set(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.DOUBLE, parentNode, parent, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.DOUBLE)),null);
+		}
+		Set(){
+			super();
+		}
+		
+	}
+	static class Subtract_From extends PrimativeFunction{
+		Subtract_From(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.DOUBLE, parentNode, parent, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.DOUBLE)),null);
+			this.setSize(120,40);
+		}
+		Subtract_From(){
+			super();
+		}
+		
+	}
+	static class Multiply_By extends PrimativeFunction{
+		Multiply_By(Point pos, Node parentNode, Primative parent) {
+			super(pos, Primative.DataType.DOUBLE, parentNode, parent, new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.DOUBLE)),null);
+			this.setSize(120,40);
+		}
+		Multiply_By(){
+			super();
+		}
+		
 	}
 	static class IntDocumentFilter extends DocumentFilter {
 		

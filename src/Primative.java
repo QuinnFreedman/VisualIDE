@@ -10,21 +10,21 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 public class Primative extends VObject implements DocumentListener, ContainsChildFunctions{
-	JEditorPane valueField;
+	SpecialEditorPane valueField;
 	Node childNode;
-	JEditorPane headerTextField;
+	SpecialEditorPane headerTextField;
 	DataType dataType;
 	static final Border bodyPadding = new EmptyBorder(5,10,5,10);
 	protected ArrayList<PrimativeFunction> functions = new ArrayList<PrimativeFunction>();
 	Primative(){
 		super();
-		headerTextField = new JEditorPane();
+		headerTextField = new SpecialEditorPane();
 		//headerTextField.setBackground(color);
 		headerTextField.setPreferredSize(new Dimension(50,20));
 		headerTextField.setOpaque(false);
 		header.add(headerTextField);
 		body.setLayout(new BorderLayout());
-		valueField = new JEditorPane();
+		valueField = new SpecialEditorPane();
 		valueField.setPreferredSize(new Dimension(90,18));
 		valueField.setOpaque(false);
 		valueField.getDocument().addDocumentListener(this);

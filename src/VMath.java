@@ -10,11 +10,16 @@ import java.util.Arrays;
 import javax.swing.BoxLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 public class VMath extends Function{
 	
-	JEditorPane valueField;
+	SpecialEditorPane valueField;
 	ArrayList<Node> additionalInputNodes = new ArrayList<Node>();
 	JPanel nodeHolder;
 	VMath(Point p){
@@ -25,7 +30,7 @@ public class VMath extends Function{
 		this.headerLabel.setText("Math");
 		this.header.setLayout(new FlowLayout(FlowLayout.LEFT));
 		body.setLayout(new BorderLayout());
-		valueField = new JEditorPane();
+		valueField = new SpecialEditorPane();
 		valueField.setPreferredSize(new Dimension(90,18));
 		valueField.setOpaque(false);
 	//	valueField.getDocument().addDocumentListener(this);
@@ -43,17 +48,21 @@ public class VMath extends Function{
 		Main.nodes.add(inputNode);
 		nodeHolder.add(inputNode);
 		
-		this.outputNode = new Node(Node.Direction.WEST,Node.NodeType.SENDING,this,new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)));
+		this.outputNode = new Node(Node.Direction.EAST,Node.NodeType.SENDING,this,new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.INTEGER)));
 		outputNode.setBorder(Primative.bodyPadding);
 		outputNode.canHaveMultipleInputs = false;
 		Main.nodes.add(outputNode);
 		this.body.add(outputNode,BorderLayout.LINE_END);
 		
+		this.valueField.setText("a");
+		new SpecialEditorPane.NoBreakDocumentFilter((AbstractDocument) valueField.getDocument());
+		
+		
 		Main.panel.repaint();
 		Main.panel.revalidate();
 		Main.panel.add(this);
 	}
-	
+
 	static class FlexNode extends Node{
 		static final ArrayList<Primative.DataType> generic = new ArrayList<Primative.DataType>(Arrays.asList(Primative.DataType.GENERIC));
 		FlexNode(Direction dir, NodeType type, VObject parentObj) {
@@ -95,4 +104,5 @@ public class VMath extends Function{
 			this.dataType = generic;
 		}
 	}
+
 }
