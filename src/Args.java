@@ -11,7 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class Args extends VObject{
-	private ArrayList<Node> inputNodes = new ArrayList<Node>();
+	public ArrayList<Node> inputNodes = new ArrayList<Node>();
 	private Node actionNode;
 	private Node outputNode;
 	public ArrayList<Node> getInputNodes(){

@@ -12,6 +12,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
@@ -28,7 +30,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-public class Main implements ActionListener, MouseInputListener{
+public class Main implements ActionListener, MouseInputListener, KeyListener{
 	static ArrayList<VObject> objects = new ArrayList<VObject>();
 	static ArrayList<Curve> curves = new ArrayList<Curve>();
 	static ArrayList<Node> nodes = new ArrayList<Node>();
@@ -42,6 +44,7 @@ public class Main implements ActionListener, MouseInputListener{
 	static JPanel panel;
 	private static JPopupMenu panelPopup;
 	private static Point clickLocation;
+	public static EntryPoint entryPoint;
 
 	public static void main(String[] args){
 		new Main();
@@ -150,8 +153,12 @@ public class Main implements ActionListener, MouseInputListener{
 		
 		window.setVisible(true);
 		
+		panel.setFocusTraversalKeysEnabled(false);
+		
 		componentMover = new ComponentMover();
 		componentMover.setEdgeInsets(new Insets(10, 10, 10, 10));
+		
+		panel.addKeyListener(this);
 		
 		panelPopup = new JPopupMenu();
 		panel.addMouseListener(this);
@@ -186,8 +193,10 @@ public class Main implements ActionListener, MouseInputListener{
 		popupBlueprint.addActionListener(this);
 		panelPopup.add(popupBlueprint);
 		
+		entryPoint = new EntryPoint();
+		panel.add(entryPoint);
 		
-		panel.add(new EntryPoint());
+		panel.requestFocusInWindow();
 	}
 	
 	@Override
@@ -256,7 +265,26 @@ public class Main implements ActionListener, MouseInputListener{
 		// Auto-generated method stub
 		
 	}
-	
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == 9){
+			Debug.tab();
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// Auto-generated method stub
+		
+	}
 	static class DisplayPanel extends JPanel{
 		DisplayPanel(){
 			this.setLayout(null);
@@ -297,4 +325,5 @@ public class Main implements ActionListener, MouseInputListener{
 			}
 		}
 	}
+
 }

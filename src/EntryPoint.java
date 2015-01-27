@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import javax.swing.JLabel;
 
 public class EntryPoint extends VObject{
+	public Node startNode;
 	EntryPoint(){
 		this.setOpaque(false);
 		this.color = Color.black;
@@ -14,7 +15,7 @@ public class EntryPoint extends VObject{
 		((FlowLayout) this.body.getLayout()).setVgap(27);
 		JLabel text = new JLabel("Start");
 		this.body.add(text);
-		Node startNode = new StartNode(this);
+		startNode = new StartNode(this);
 		Main.nodes.add(startNode);
 		this.add(startNode,BorderLayout.AFTER_LAST_LINE);
 	}
