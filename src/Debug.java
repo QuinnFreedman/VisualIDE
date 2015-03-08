@@ -17,6 +17,8 @@ public class Debug{
 
 	private static void step(){
 		currentLowest.setBorder(BorderFactory.createEmptyBorder());
+		if(currentHighest != null)
+			currentHighest.setBorder(BorderFactory.createEmptyBorder());
 		if(currentLowest.getClass() == EntryPoint.class){
 			ArrayList<Node> children = ((EntryPoint) currentLowest).startNode.children;
 			if(children.size() != 0){
@@ -32,6 +34,8 @@ public class Debug{
 				}
 			}
 		}
+		if(currentHighest != null)
+			currentHighest.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 		currentLowest.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
 	}
 	

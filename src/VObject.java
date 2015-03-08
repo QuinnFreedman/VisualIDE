@@ -6,14 +6,16 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Iterator;
 
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
-public class VObject extends JPanel{
+public class VObject extends JPanel implements MouseInputListener{
 	String id;
 	Point position;
 	Boolean isDragged;
@@ -28,6 +30,7 @@ public class VObject extends JPanel{
 		return new Point(10,10);
 	}
 	VObject(){
+		this.addMouseListener(this);
 		this.setOpaque(false);
 		this.setLayout(new BorderLayout());
 		header = new JPanel();
@@ -67,6 +70,10 @@ public class VObject extends JPanel{
 				itrN.remove();
 			}
 		}
+		System.out.println(this.getClass());
+		if(this.getClass().impelents(ContainsChildFunctions.class)){
+			System.out.println("children");
+		}
 		Main.panel.repaint();
 	}
 	
@@ -79,6 +86,44 @@ public class VObject extends JPanel{
 		g2.setPaint(gradient);
 	    g2.fill(new RoundRectangle2D.Double(0, 0, this.getSize().width, this.getSize().height+20, 20, 20));
 	    g2.setPaint(Color.black);
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// Auto-generated method stub
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+		if(e.getButton() == MouseEvent.BUTTON3){
+			if(this.getClass() != EntryPoint.class){
+				this.delete();
+			}
+		}
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// Auto-generated method stub
+		
 	}
 	
 	

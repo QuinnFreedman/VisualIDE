@@ -223,10 +223,7 @@ public class Main implements ActionListener, MouseInputListener, KeyListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3){
-			clickLocation = new Point(e.getX(), e.getY());
-			panelPopup.show(panel, e.getX(), e.getY());
-		}
+		// Auto-generated method stub
 		
 	}
 
@@ -249,9 +246,11 @@ public class Main implements ActionListener, MouseInputListener, KeyListener{
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// Auto-generated method stub
-		
+	public void mouseReleased(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON3){
+			clickLocation = new Point(e.getX(), e.getY());
+			panelPopup.show(panel, e.getX(), e.getY());
+		}
 	}
 
 	@Override
@@ -270,6 +269,8 @@ public class Main implements ActionListener, MouseInputListener, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == 9){
 			Debug.tab();
+		}else if(e.getKeyCode() == 88){
+			//Point p = getLocationOnPanel();
 		}
 		
 	}
