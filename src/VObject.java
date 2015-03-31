@@ -71,9 +71,9 @@ public class VObject extends JPanel implements MouseInputListener{
 			}
 		}
 		System.out.println(this.getClass());
-		if(this.getClass().impelents(ContainsChildFunctions.class)){
+		/*if(this.getClass().impelents(ContainsChildFunctions.class)){
 			System.out.println("children");
-		}
+		}*/
 		Main.panel.repaint();
 	}
 	

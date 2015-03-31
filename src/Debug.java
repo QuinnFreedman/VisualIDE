@@ -1,23 +1,33 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 
 public class Debug{
-	private static VObject currentLowest;
-	private static VObject currentHighest;
+	private static ArrayList<VObject> currentLowest;
+	private static VObject currentHighest = null;
 	private static int currentNode = 0;
 	private static boolean isStepping = false;
 	
 	private static void startStep(){
-		currentLowest = Main.entryPoint;
+		currentLowest = new ArrayList<VObject>(Arrays.asList(Main.entryPoint));
 		isStepping = true;
-		currentLowest.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
+		currentLowest.get(0).setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
 	}
 
 	private static void step(){
-		currentLowest.setBorder(BorderFactory.createEmptyBorder());
-		if(currentHighest != null)
+		if(currentHighest == null && currentLowest.size() == 1){
+			if(currentLowest.get(0).getClass() == EntryPoint.class){
+				ArrayList<Node> children = ((EntryPoint) currentLowest.get(0)).startNode.children;
+				if(children.size() != 0){
+					currentLowest.set(0,children.get(0).parentObject);
+				}
+			}else if(currentLowest.get(0).getClass() == Args.class){
+				
+			}
+		}
+		/*if(currentHighest != null)
 			currentHighest.setBorder(BorderFactory.createEmptyBorder());
 		if(currentLowest.getClass() == EntryPoint.class){
 			ArrayList<Node> children = ((EntryPoint) currentLowest).startNode.children;
@@ -37,6 +47,7 @@ public class Debug{
 		if(currentHighest != null)
 			currentHighest.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 		currentLowest.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
+		*/
 	}
 	
 	public static void tab() {

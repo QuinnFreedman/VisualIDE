@@ -216,6 +216,8 @@ public class Main implements ActionListener, MouseInputListener, KeyListener{
 			objects.add(new VDouble(p));
 		}else if(c == "Math"){
 			objects.add(new VMath(p));
+		}else if(c == "Timeline"){
+			objects.add(new Timeline(p));
 		}else{
 			System.out.println("null Action:"+c);
 		}
