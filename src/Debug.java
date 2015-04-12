@@ -5,19 +5,27 @@ import java.util.Arrays;
 import javax.swing.BorderFactory;
 
 public class Debug{
-	private static ArrayList<VObject> currentLowest;
-	private static VObject currentHighest = null;
+	//private static ArrayList<VObject> currentLowest;
+	//private static VObject currentHighest = null;
+	private static ArrayList<VObject> stack;
 	private static int currentNode = 0;
 	private static boolean isStepping = false;
 	
 	private static void startStep(){
-		currentLowest = new ArrayList<VObject>(Arrays.asList(Main.entryPoint));
+		stack = new ArrayList<VObject>(Arrays.asList(Main.entryPoint));
 		isStepping = true;
-		currentLowest.get(0).setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
+		stack.get(0).setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
 	}
 
 	private static void step(){
-		if(currentHighest == null && currentLowest.size() == 1){
+		
+		if(stack.get(0) instanceof Args){
+			
+		}else if(stack.get(0) instanceof Function){
+			
+		}
+		
+		/*if(currentHighest == null && currentLowest.size() == 1){
 			if(currentLowest.get(0).getClass() == EntryPoint.class){
 				ArrayList<Node> children = ((EntryPoint) currentLowest.get(0)).startNode.children;
 				if(children.size() != 0){
@@ -26,7 +34,7 @@ public class Debug{
 			}else if(currentLowest.get(0).getClass() == Args.class){
 				
 			}
-		}
+		}*/
 		/*if(currentHighest != null)
 			currentHighest.setBorder(BorderFactory.createEmptyBorder());
 		if(currentLowest.getClass() == EntryPoint.class){
