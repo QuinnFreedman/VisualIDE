@@ -15,47 +15,59 @@ public class Debug{
 		stack = new ArrayList<VObject>(Arrays.asList(Main.entryPoint));
 		isStepping = true;
 		stack.get(0).setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
-	}
-
-	private static void step(){
 		
-		if(stack.get(0) instanceof Args){
-			
-		}else if(stack.get(0) instanceof Function){
-			
+		for(VObject o : Main.objects){
+			if(o instanceof Args){
+				((Args) o).setActiveNode(0);
+			}
+		}
+	}
+	
+	private static boolean moveUpStack(){
+		if(stack.isEmpty()){
+			return false;
 		}
 		
-		/*if(currentHighest == null && currentLowest.size() == 1){
-			if(currentLowest.get(0).getClass() == EntryPoint.class){
-				ArrayList<Node> children = ((EntryPoint) currentLowest.get(0)).startNode.children;
-				if(children.size() != 0){
-					currentLowest.set(0,children.get(0).parentObject);
+		VObject last = stack.get(stack.size()-1);
+		
+		if(last instanceof Args){
+			
+			if(((Args) last).getActiveNode().parents.isEmpty()){
+				return false;
+			}else{
+				stack.add(((Args) last).getActiveNode().parents.get(0).parentObject);
+				return true;
+			}
+			
+		}else if(last instanceof Function){
+			if(last instanceof PrimativeFunction){
+				return false;
+			}else{
+				
+				if(((PrimativeFunction) last).inputNode.parents.isEmpty()){
+					return false;
+				}else{
+					stack.add(((PrimativeFunction) last).inputNode.parents.get(0).parentObject);
+					return true;
 				}
-			}else if(currentLowest.get(0).getClass() == Args.class){
 				
 			}
-		}*/
-		/*if(currentHighest != null)
-			currentHighest.setBorder(BorderFactory.createEmptyBorder());
-		if(currentLowest.getClass() == EntryPoint.class){
-			ArrayList<Node> children = ((EntryPoint) currentLowest).startNode.children;
-			if(children.size() != 0){
-				currentLowest = children.get(0).parentObject;
-			}
-		}else if(currentLowest.getClass() == Args.class){
-			if(currentHighest == null){
-				if(currentNode == ((Args) currentLowest).inputNodes.size()){
-					//goto next lowest
-				}else{
-					currentHighest = ((Args) currentLowest).inputNodes.get(currentNode).parentObject;
-					currentNode++;
-				}
-			}
 		}
-		if(currentHighest != null)
-			currentHighest.setBorder(BorderFactory.createLineBorder(Color.green, 2));
-		currentLowest.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
-		*/
+		
+		return false;
+	}
+	
+	private static void moveDownStack(){
+		
+		
+		
+	}
+	
+	private static void step(){
+		
+		
+		
+		
 	}
 	
 	public static void tab() {

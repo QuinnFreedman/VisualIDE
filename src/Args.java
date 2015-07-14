@@ -14,8 +14,15 @@ public class Args extends VObject{
 	public ArrayList<Node> inputNodes = new ArrayList<Node>();
 	private Node actionNode;
 	private Node outputNode;
+	private int activeNode;//for debug
 	public ArrayList<Node> getInputNodes(){
 		return inputNodes;
+	}
+	public Node getActiveNode(){
+		return inputNodes.get(activeNode);
+	}
+	public void setActiveNode(int i){
+		activeNode = i;
 	}
 	Args(Node A, Node B){
 		Node recieveNode;
